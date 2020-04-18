@@ -1,8 +1,8 @@
 from concurrent import futures
 import grpc
 
-import GameState_pb2
-import GameState_pb2_grpc
+from src import GameState_pb2
+from src import GameState_pb2_grpc
 
 
 class GameServer(GameState_pb2_grpc.GameServiceServicer):

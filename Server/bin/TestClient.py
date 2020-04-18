@@ -1,10 +1,11 @@
 import grpc
 
-import GameState_pb2
-import GameState_pb2_grpc
+from src import GameState_pb2_grpc
+from src import GameState_pb2
 
 
 def main():
+
     with grpc.insecure_channel("localhost:50051") as channel:
         stub = GameState_pb2_grpc.GameServiceStub(channel)
 
