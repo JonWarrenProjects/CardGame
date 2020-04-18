@@ -18,12 +18,23 @@ class GameServiceStub(object):
                 request_serializer=comms_dot_GameState__pb2.HelloWorldRequest.SerializeToString,
                 response_deserializer=comms_dot_GameState__pb2.HelloWorldResponse.FromString,
                 )
+        self.GetInitialGameState = channel.unary_unary(
+                '/GameService/GetInitialGameState',
+                request_serializer=comms_dot_GameState__pb2.InitialStateRequest.SerializeToString,
+                response_deserializer=comms_dot_GameState__pb2.InitialisationResponse.FromString,
+                )
 
 
 class GameServiceServicer(object):
     """Missing associated documentation comment in .proto file"""
 
     def HelloWorld(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetInitialGameState(self, request, context):
         """Missing associated documentation comment in .proto file"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -36,6 +47,11 @@ def add_GameServiceServicer_to_server(servicer, server):
                     servicer.HelloWorld,
                     request_deserializer=comms_dot_GameState__pb2.HelloWorldRequest.FromString,
                     response_serializer=comms_dot_GameState__pb2.HelloWorldResponse.SerializeToString,
+            ),
+            'GetInitialGameState': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetInitialGameState,
+                    request_deserializer=comms_dot_GameState__pb2.InitialStateRequest.FromString,
+                    response_serializer=comms_dot_GameState__pb2.InitialisationResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -60,5 +76,21 @@ class GameService(object):
         return grpc.experimental.unary_unary(request, target, '/GameService/HelloWorld',
             comms_dot_GameState__pb2.HelloWorldRequest.SerializeToString,
             comms_dot_GameState__pb2.HelloWorldResponse.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetInitialGameState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/GameService/GetInitialGameState',
+            comms_dot_GameState__pb2.InitialStateRequest.SerializeToString,
+            comms_dot_GameState__pb2.InitialisationResponse.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)
